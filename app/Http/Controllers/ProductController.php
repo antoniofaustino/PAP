@@ -30,7 +30,11 @@ class ProductController extends Controller
 
     public function index()
     {
-        return 'Listagem dos produtos';
+        $teste = 123;
+        $teste2 = 312;
+        $teste3=[];
+        $products = ['TV', 'Geladeira', 'Forno', 'Sofá'];
+        return view('Admin.pages.products.index', compact('teste', 'teste2', 'teste3', 'products'));
     }
 
 
@@ -43,7 +47,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        //
+        return view('admin.pages.products.create');
     }
 
 

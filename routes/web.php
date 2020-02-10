@@ -29,7 +29,7 @@ Route::get('/login',function(){
 
 
 //one liner de todas as rotas abaixo
-Route::resource('products', 'ProductController')->middleware(['auth']);
+Route::resource('products', 'ProductController')->middleware([]);
 
 
 // Route::delete('products/{id}', 'ProductController@destroy')->name('products.destroy');
