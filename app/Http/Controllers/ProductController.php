@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\StoreUpdateProductRequest;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,7 @@ class ProductController extends Controller
     
          $this->request = $request;
         //  $this->middleware('auth');
-        $this->middleware('auth')->except(['index','show']);
+        //$this->middleware('auth')->except(['index','show']);
 
          
 
@@ -30,11 +31,10 @@ class ProductController extends Controller
 
     public function index()
     {
-        $teste = 123;
-        $teste2 = 312;
-        $teste3=[];
-        $products = ['TV', 'Geladeira', 'Forno', 'Sofá'];
-        return view('Admin.pages.products.index', compact('teste', 'teste2', 'teste3', 'products'));
+        $products = Product::all();
+        return view('Admin.pages.products.index',[
+            'products'=> $products,
+            ]);
     }
 
 
@@ -47,7 +47,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin.pages.products.create');
+        return view('Admin.pages.products.create');
     }
 
 
@@ -59,9 +59,15 @@ class ProductController extends Controller
      */
 
 
-    public function store(Request $request)
+    public function store(StoreUpdateProductRequest $request)
     {
-        //
+       $data = $request->only('name','description','price');
+       Product::create($data);
+       return redirect()-> route('products.index');
+    // $product->name=$request->name;
+    // $product->save();
+
+        
     }
 
 
@@ -74,8 +80,17 @@ class ProductController extends Controller
 
 
     public function show($id)
+
     {
-        return "detalhes do produto{$id}";
+        //$product = Product::where('id',$id)->first();
+       //$product=Product::find($id);
+        if(!$product=Product::find($id)){
+            return redirect()->back();
+        }
+        
+        return view('Admin.pages.products.show', [
+            'product'=>$product
+        ]);
     }
 
 
@@ -89,7 +104,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        //
+        return view('Admin.pages.products.edit', compact('id'));
     }
 
 
@@ -104,7 +119,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        dd("Editando o produto {$id}");
     }
 
 

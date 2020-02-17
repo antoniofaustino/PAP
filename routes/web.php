@@ -4,6 +4,10 @@ Route::get('/login',function(){
     return'Login';
 })->name('login');
 
+Route::get('/register',function(){
+    return view('resources.views.logs.register');
+})->name('register');
+
 //os tres routes são para o admin aceder, o middleware não deixa o user normal aceder por isso pede o login.
 //Route::middleware([])-> group (function() {
 //prefix serve para todos terem os mesmo url inicial ou seja /admin/dashboard;/admin/financeiro; o que facilita se alguma dia tiver que mudar o nome.
@@ -61,74 +65,82 @@ Route::group([
 });
 
 
-Route::get('/redirect3', function(){
-    return redirect()->route('url.name');
-});
+// Route::get('/redirect3', function(){
+//     return redirect()->route('url.name');
+// });
 
 
-Route::get('/nome-url', function(){
-    return'hey hey hey';
-})->name('url.name');
+// Route::get('/nome-url', function(){
+//     return'hey hey hey';
+// })->name('url.name');
 
 
 Route::view('view', 'site.welcome');
 
 
-Route::redirect('/redirect1', '/redirect2');
+// Route::redirect('/redirect1', '/redirect2');
 
 //Route::get('/redirect1', function(){
  //   return redirect('/redirect2');
 //});
 
 
-Route::get('/redirect2', function(){
-    return "Redirect 02";
-});
+// Route::get('/redirect2', function(){
+//     return "Redirect 02";
+// });
 
 
 //O ? é preciso para ir buscar qualquer tipo de produto mas para funcionar temos que dar um valor na função($idProduct='')
-Route::get('/produtos/{idProduct?}', function($idProduct=''){
-    return "Produto(s){$idProduct}";
+// Route::get('/produtos/{idProduct?}', function($idProduct=''){
+//     return "Produto(s){$idProduct}";
+// });
+
+
+// //Neste caso a função tem que ter o mesmo nome que a flag
+// Route::get('/categoria/{flag}/posts', function($flag){
+//     return "Produtos da categoria:{$flag}";
+// });
+
+
+// //Neste caso a flag não tem que ter o mesmo nome que a função
+// Route::get('/categorias/{flag}', function($prm1){
+//     return "Produtos da categoria:{$prm1}";
+// });
+
+
+// Route::match(['Post','get'], '/match',function(){
+//     return 'match';
+// });
+
+
+// Route::any('/any', function(){
+//     return'any';
+// });
+
+Route::get('/casamentos',function(){
+    return'casamentos';
+    });
+Route::get('/batizados',function(){
+        return'batizados';
+        });
+Route::get('/events',function(){
+            return'events';
+            });
+Route::get('/People',function(){
+    return'people';
+    });
+Route::get('/about', function () {
+    return view('about');
 });
-
-
-//Neste caso a função tem que ter o mesmo nome que a flag
-Route::get('/categoria/{flag}/posts', function($flag){
-    return "Produtos da categoria:{$flag}";
-});
-
-
-//Neste caso a flag não tem que ter o mesmo nome que a função
-Route::get('/categorias/{flag}', function($prm1){
-    return "Produtos da categoria:{$prm1}";
-});
-
-
-Route::match(['Post','get'], '/match',function(){
-    return 'match';
-});
-
-
-Route::any('/any', function(){
-    return'any';
-});
-
-
-Route::post('/register', function(){
-    return'';
-});
-
-
-Route::get('/empresa', function () {
-    return 'Sobre a empresa';
-});
-
 
 Route::get('/contacto', function () {
-    return view('site.contact');
+    return view('contact');
 });
-
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
